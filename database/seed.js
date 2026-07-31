@@ -10,13 +10,13 @@ const dotenv = require('dotenv');
 dotenv.config({ path: path.join(__dirname, '../backend/.env') });
 
 const mongoose = require('mongoose');
+const connectDB = require('../backend/config/db');
 const User = require('../backend/models/User');
 const Event = require('../backend/models/Event');
 
 const seed = async () => {
-  const uri = process.env.MONGO_URI || 'mongodb://localhost:27017/event-ticketing';
-  await mongoose.connect(uri);
-  console.log('Connected for seeding:', uri);
+  await connectDB();
+  console.log('Connected for seeding');
 
   let admin = await User.findOne({ email: 'admin@eventticket.com' });
   if (!admin) {
